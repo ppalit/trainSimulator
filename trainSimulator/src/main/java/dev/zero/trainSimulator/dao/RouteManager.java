@@ -1,12 +1,23 @@
 package dev.zero.trainSimulator.dao;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import dev.zero.trainSimulator.model.RouteEntity;
 
+@Component
 public class RouteManager {
+	
+	@Autowired
+	DataSource dataSource;
+	
+	
+	
 	int count = 0;
 	String stations[];
 	public RouteEntity[] insertRM() {
@@ -26,7 +37,7 @@ public class RouteManager {
 			System.out.println("Can't load driver:");
 		}
 		try {
-			con = DriverManager.getConnection(dbURL, "", "");
+			con = dataSource.getConnection();
 			System.out.println("Connected to database  successfully");
 			st = con.createStatement();
 			query = "select * from routes";

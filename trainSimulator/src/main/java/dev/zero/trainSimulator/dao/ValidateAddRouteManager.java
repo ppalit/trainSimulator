@@ -1,14 +1,22 @@
 package dev.zero.trainSimulator.dao;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.sql.DataSource;
 import javax.swing.JOptionPane;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
 public class ValidateAddRouteManager {
 
+	
+	@Autowired
+	DataSource dataSource;
+	
 	public ValidateAddRouteManager(){}
 	public int ValidateAddRouteManagerFunc(String name, int routeNo ) throws SQLException {
 	
@@ -25,7 +33,7 @@ public class ValidateAddRouteManager {
 								}
 	try {
 
-			con = DriverManager.getConnection(dbURL, "", "");
+			con = dataSource.getConnection();
 			System.out.println("Connected to database  successfully");
 			st = con.createStatement();
 			query = "Select * from Station_details";// where station_name='"+name+"'";

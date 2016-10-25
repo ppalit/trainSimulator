@@ -1,16 +1,23 @@
 package dev.zero.trainSimulator.dao;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.sql.DataSource;
 import javax.swing.JOptionPane;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import dev.zero.trainSimulator.model.StationEntity;
 
-
+@Component
 public class AddStationManager {
+	
+	@Autowired
+	DataSource dataSource;
+	
 
 	public AddStationManager(StationEntity se, int noc) throws SQLException {
 
@@ -27,7 +34,7 @@ public class AddStationManager {
 		}
 		try {
 
-			con = DriverManager.getConnection(dbURL, "", "");
+			con = dataSource.getConnection();
 			System.out.println("Connected to database  successfully");
 			st = con.createStatement();
 			String str1 = se.getStation_name();

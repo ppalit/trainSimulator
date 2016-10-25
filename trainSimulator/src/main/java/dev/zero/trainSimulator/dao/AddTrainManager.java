@@ -1,23 +1,30 @@
 package dev.zero.trainSimulator.dao;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Random;
 
+import javax.sql.DataSource;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import dev.zero.trainSimulator.Schedule;
 import dev.zero.trainSimulator.SetTrainTime;
 import dev.zero.trainSimulator.model.TimeCal;
 import dev.zero.trainSimulator.model.TrainEntity;
 
+@Component
 public class AddTrainManager {
-
+	
+	@Autowired
+	DataSource dataSource;
+	
 	public AddTrainManager(TrainEntity te) throws SQLException {
 
 		String dbURL = "jdbc:odbc:TSA";
@@ -47,7 +54,7 @@ public class AddTrainManager {
 		}
 		try {
 
-			con = DriverManager.getConnection(dbURL, "", "");
+			con = dataSource.getConnection();
 			System.out.println("Connected to database  successfully");
 			st = con.createStatement();
 

@@ -1,14 +1,21 @@
 package dev.zero.trainSimulator.dao;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.sql.DataSource;
 import javax.swing.JOptionPane;
 
-public class DelTrainManager {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
+public class DelTrainManager {
+	
+	@Autowired
+	DataSource dataSource;
+	
 	public DelTrainManager(int trainno) throws SQLException {
 
 		String dbURL = "jdbc:odbc:TSA";
@@ -30,7 +37,7 @@ public class DelTrainManager {
 		}
 		try {
 
-			con = DriverManager.getConnection(dbURL, "", "");
+			con = dataSource.getConnection();
 			System.out.println("Connected to database  successfully");
 			st = con.createStatement();
 

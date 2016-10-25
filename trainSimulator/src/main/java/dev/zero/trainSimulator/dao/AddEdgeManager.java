@@ -4,8 +4,13 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import javax.sql.DataSource;
 import javax.swing.JOptionPane;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
 public class AddEdgeManager {
 	String dbURL = "jdbc:odbc:TSA";
 	Connection con = null;
@@ -16,7 +21,10 @@ public class AddEdgeManager {
 	String arr[][] = new String[300][300];
 	int counter;
 	int noTracks[] = new int[300];
-
+	
+	@Autowired
+	DataSource dataSource;
+	
 	public AddEdgeManager() {
 		try {
 			Class.forName("sun.jdbc.odbc.JdbcOdbcDriver").newInstance();
@@ -26,7 +34,7 @@ public class AddEdgeManager {
 		}
 		try {
 
-			con = DriverManager.getConnection(dbURL, "", "");
+			con = dataSource.getConnection();
 			System.out.println("Connected to database  successfully");
 			st = con.createStatement();
 
@@ -91,7 +99,7 @@ public class AddEdgeManager {
 		}
 		try {
 
-			con = DriverManager.getConnection(dbURL, "", "");
+			con = dataSource.getConnection();
 			System.out.println("Connected to database  successfully");
 			st = con.createStatement();
 

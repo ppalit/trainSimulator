@@ -1,14 +1,22 @@
 package dev.zero.trainSimulator.dao;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.sql.DataSource;
 import javax.swing.JOptionPane;
 
-public class ValidateAddTrainManager {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
+public class ValidateAddTrainManager {
+	
+	@Autowired
+	DataSource dataSource;
+
+	
 	public ValidateAddTrainManager(){}	
 		
 		
@@ -27,7 +35,7 @@ public class ValidateAddTrainManager {
 								}
 	try {
 
-			con = DriverManager.getConnection(dbURL, "", "");
+			con = dataSource.getConnection();
 			System.out.println("Connected to database  successfully");
 			st = con.createStatement();
 			//validation_________________________________________________________Starts from here

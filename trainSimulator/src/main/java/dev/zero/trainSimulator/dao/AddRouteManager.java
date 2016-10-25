@@ -1,14 +1,21 @@
 package dev.zero.trainSimulator.dao;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import dev.zero.trainSimulator.model.RouteEntity;
 
+@Component
 public class AddRouteManager {
-		
-		
+	
+	@Autowired
+	DataSource dataSource;
+			
 	public AddRouteManager(RouteEntity re) throws SQLException {
 
 		String dbURL = "jdbc:odbc:TSA";
@@ -25,7 +32,7 @@ public class AddRouteManager {
 		}
 		try {
 
-			con = DriverManager.getConnection(dbURL, "", "");
+			con = dataSource.getConnection();
 			System.out.println("Connected to database  successfully");
 			st = con.createStatement();
 

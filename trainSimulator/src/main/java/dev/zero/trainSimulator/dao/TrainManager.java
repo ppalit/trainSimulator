@@ -1,11 +1,16 @@
 package dev.zero.trainSimulator.dao;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import dev.zero.trainSimulator.model.TrainEntity;
 
+@Component
 public class TrainManager {
 	/*
 	 * public static void main(String args[]) { try{ testConnection(); }
@@ -14,6 +19,9 @@ public class TrainManager {
 
 	int count = 0;
 	String stopage[];
+	
+	@Autowired
+	DataSource dataSource;
 
 	public TrainEntity[] insertTM() {
 		String dbURL = "jdbc:odbc:TSA";
@@ -33,7 +41,7 @@ public class TrainManager {
 			System.out.println("Can't load driver:");
 		}
 		try {
-			con = DriverManager.getConnection(dbURL, "", "");
+			con = dataSource.getConnection();
 			System.out.println("Connected to database  successfully");
 			st = con.createStatement();
 			query = "select * from runningdays";
